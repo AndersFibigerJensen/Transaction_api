@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.SqlServer;
-using Transactionsclass;
+using Transaction_api.NewFolder;
 namespace Transaction_api.Context
 {
     public class TransactionContext:DbContext
@@ -10,7 +10,7 @@ namespace Transaction_api.Context
             
         }
 
-        public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Transactions> Transactions { get; set; }
 
     }
 }

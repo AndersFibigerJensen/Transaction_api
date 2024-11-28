@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Transactionsclass;
-
+using Transaction_api.NewFolder;
+using Transaction_api.Repositories;
 namespace Transaction_api.Controllers
 {
     [ApiController]
@@ -27,7 +27,7 @@ namespace Transaction_api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Transaction> gettransaction(int id)
+        public ActionResult<Transactions> gettransaction(int id)
         {
             try
             {
@@ -42,7 +42,7 @@ namespace Transaction_api.Controllers
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public ActionResult<Transaction?> update(int id, Transaction action)
+        public ActionResult<Transactions?> update(int id, Transactions action)
         {
             gettransaction(id);
             return _repo.updatetransaction(id, action);

@@ -12,10 +12,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Transactionsclass">
-      <HintPath>..\..\Transactionsclass\Transactionsclass\bin\Debug\net8.0\Transactionsclass.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
