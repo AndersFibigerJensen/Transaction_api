@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Transaction_api;
+using Transaction_api.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,9 +19,9 @@ builder.Services.AddCors(options =>
 }
 );
 
-var optionsbuilder = new DbContextOptionsBuilder<Transactionsclass.TransactionDbContext>();
+var optionsbuilder = new DbContextOptionsBuilder<TransactionContext>();
 optionsbuilder.UseSqlServer(Secret.secret);
-Transactionsclass.TransactionDbContext transcontext= new(optionsbuilder.Options);
+TransactionContext transcontext= new(optionsbuilder.Options);
 
 var app = builder.Build();
 
