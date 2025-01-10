@@ -33,7 +33,7 @@ namespace Transaction_api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public ActionResult<Segment?> getsegment(int id)
         {
-            return _repo.getid(id);
+            return _repo.getid(id).Result;
         }
 
         [HttpPut("{id}")]

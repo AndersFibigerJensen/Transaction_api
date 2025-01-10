@@ -42,6 +42,16 @@ Storebuilder.UseSqlServer(Secret.secret);
 StoreContext Storecontext = new(Storebuilder.Options);
 builder.Services.AddSingleton<StoreRepo>(new StoreRepo(Storecontext));
 
+var ProductClusterbuilder = new DbContextOptionsBuilder<ProductClusterContext>();
+ProductClusterbuilder.UseSqlServer(Secret.secret);
+ProductClusterContext ProductClustercontext = new(ProductClusterbuilder.Options);
+builder.Services.AddSingleton<ProductClusterRepo>(new ProductClusterRepo(ProductClustercontext));
+
+var StoreClusterbuilder = new DbContextOptionsBuilder<StoreClusterContext>();
+StoreClusterbuilder.UseSqlServer(Secret.secret);
+StoreClusterContext StoreClustercontext = new(StoreClusterbuilder.Options);
+builder.Services.AddSingleton<StoreClusterRepo>(new StoreClusterRepo(StoreClustercontext));
+
 
 var app = builder.Build();
 
