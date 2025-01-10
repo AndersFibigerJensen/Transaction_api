@@ -10,7 +10,7 @@ namespace Transaction_api.Context
             
         }
 
-        public DbSet<Transactions> Transactions { get; set; }
+        public DbSet<Segment> Transactions { get; set; }
 
     }
 }
