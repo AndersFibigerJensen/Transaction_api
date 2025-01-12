@@ -2,7 +2,7 @@
 {
     public class StoreCluster
     {
-        public int Transaction_id { get; set; }
+        public long Transaction_id { get; set; }
 
         public int Store_id { get; set; }
 
@@ -10,7 +10,7 @@
 
         public int Cluster_id { get; set; }
 
-        public StoreCluster(int id,int store_id,int category_id,int cluster_id)
+        public StoreCluster(long id,int store_id,int category_id,int cluster_id)
         {
             Transaction_id = id;
             Store_id = store_id;

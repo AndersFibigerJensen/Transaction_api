@@ -5,7 +5,7 @@ namespace Transaction_api.Repositories
 {
     public class StoreClusterRepo
     {
-        private string getSQL = "select * from";
+        private string getSQL = "select * from StoreCluster";
         private StoreClusterContext _context;
 
         public StoreClusterRepo(StoreClusterContext context)
@@ -31,7 +31,7 @@ namespace Transaction_api.Repositories
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     while (await reader.ReadAsync())
                     {
-                        int productid = reader.GetInt32(0);
+                        long productid = reader.GetInt64(0);
                         int productname = reader.GetInt32(1);
                         int productdetail = reader.GetInt32(2);
                         int prod = reader.GetInt32(3);

@@ -8,10 +8,6 @@ namespace Transaction_api.Controllers
     [Route("[controller]")]
     public class TransactionController : ControllerBase
     {
-
-        private readonly CategoryContext _categoryContext;
-        private readonly ProductContext _productcontext;
-        private readonly StoreContext _storecontext;
         private readonly TransactionRepo _repo;
 
         public TransactionController(TransactionRepo repo)
@@ -19,15 +15,22 @@ namespace Transaction_api.Controllers
             _repo = repo;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         public void addtransaction()
         {
-            //_repo.add()
+            //_repo.add();
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -36,6 +39,10 @@ namespace Transaction_api.Controllers
             return _repo.getid(id).Result;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
