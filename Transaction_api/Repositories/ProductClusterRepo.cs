@@ -17,7 +17,7 @@ namespace Transaction_api.Repositories
         }
 
         /// <summary>
-        /// 
+        /// henter data ud fra den information som er givet
         /// </summary>
         /// <param name="category_id"></param>
         /// <param name="cluster_id"></param>
@@ -37,7 +37,7 @@ namespace Transaction_api.Repositories
                         long productid = reader.GetInt64(0);
                         int productname = reader.GetInt32(1);
                         int productdetail = reader.GetInt32(2);
-                        int prod = reader.GetInt32(3);
+                        int prod =reader.GetInt32(3);
                         ProductCluster pro = new ProductCluster(productid, productname, productdetail, prod);
                         products.Add(pro);
                     }
