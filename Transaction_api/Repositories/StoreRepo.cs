@@ -16,6 +16,10 @@ namespace Transaction_api.Repositories
             _context = Context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Store>> getstores()
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
@@ -40,6 +44,11 @@ namespace Transaction_api.Repositories
             
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<Store?> getstore(int id)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))

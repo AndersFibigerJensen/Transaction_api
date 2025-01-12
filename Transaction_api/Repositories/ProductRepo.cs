@@ -16,6 +16,10 @@ namespace Transaction_api.Repositories
            _context = context;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         public async Task<List<Product>> getall()
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))

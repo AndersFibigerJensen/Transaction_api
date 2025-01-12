@@ -27,11 +27,6 @@ optionsbuilder.UseSqlServer(Secret.secret);
 TransactionContext transcontext= new(optionsbuilder.Options);
 builder.Services.AddSingleton<TransactionRepo>(new TransactionRepo(transcontext));
 
-var Categorybuilder = new DbContextOptionsBuilder<CategoryContext>();
-Categorybuilder.UseSqlServer(Secret.secret);
-CategoryContext Categorycontext = new(Categorybuilder.Options);
-builder.Services.AddSingleton<CategoryRepo>(new CategoryRepo(Categorycontext));
-
 var Productbuilder = new DbContextOptionsBuilder<ProductContext>();
 Productbuilder.UseSqlServer(Secret.secret);
 ProductContext Productcontext = new(Productbuilder.Options);

@@ -13,7 +13,14 @@ namespace Transaction_api.Repositories
             _context = context;
         }
 
-        public async Task<List<StoreCluster>> getall()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="store"></param>
+        /// <param name="cluster"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public async Task<List<StoreCluster>> getall(int store=0,int cluster=0,int category=0)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
             {
@@ -30,6 +37,18 @@ namespace Transaction_api.Repositories
                         int prod = reader.GetInt32(3);
                         StoreCluster pro = new StoreCluster(productid, productname, productdetail, prod);
                         storeClusters.Add(pro);
+                    }
+                    if(store!=0)
+                    {
+                        storeClusters=storeClusters.Where(a => a.Store_id == store).ToList();
+                    }
+                    if(cluster!=0)
+                    {
+                        storeClusters = storeClusters.Where(a => a.Cluster_id == cluster).ToList();
+                    }
+                    if(category!=0)
+                    {
+                        storeClusters.Where(a => a.Product_category == category).ToList();
                     }
                     return storeClusters;
                 }

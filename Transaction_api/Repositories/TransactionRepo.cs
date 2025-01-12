@@ -23,6 +23,12 @@ namespace Transaction_api.Repositories
             _db = dbcontext;
         }
 
+        
+        /// <summary>
+        /// bruges til at hente skrive en nye transaktion ind i datbasen
+        /// </summary>
+        /// <param name="action">den nye segment</param>
+        /// <returns></returns>
         public async Task add(Segment action)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
@@ -51,6 +57,11 @@ namespace Transaction_api.Repositories
             }
         }
 
+        /// <summary>
+        /// bruges til hente en transaktion ud fra transaktionens unikke id
+        /// </summary>
+        /// <param name="id">bruges til indsætte det unikke id</param>
+        /// <returns> returnere transaktionen med det unikke id</returns>
         public async Task<Segment?> getid(int id)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
@@ -85,6 +96,11 @@ namespace Transaction_api.Repositories
             }
         }
 
+        /// <summary>
+        /// bruges til at slette en transaktion
+        /// </summary>
+        /// <param name="id"> bruges til at finde en transaktion ud fra id</param>
+        /// <returns> returnere det segment som er blevet slettet</returns>
         public async Task<Segment?> deletetransaction(int id)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
