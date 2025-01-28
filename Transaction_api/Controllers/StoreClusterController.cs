@@ -17,9 +17,27 @@ namespace Transaction_api.Controllers
 
 
         [HttpGet]
-        public ActionResult<List<StoreCluster>> getall([FromQuery] int category, [FromQuery] int store_id, [FromQuery] int cluster)
+        public ActionResult<int> getall([FromQuery] int category, [FromQuery] int store_id, [FromQuery] int cluster)
         {
-            return _storeClusterRepo.getall().Result;
+            return _storeClusterRepo.getall(store_id,cluster,category).Result;
+        }
+
+        [HttpGet("store")]
+        public ActionResult<List<int>> get()
+        {
+            return _storeClusterRepo.getstores().Result;
+        }
+
+        [HttpGet("Clusters")]
+        public ActionResult<List<int>> getClusters()
+        {
+            return _storeClusterRepo.getClusters().Result;
+        }
+
+        [HttpGet("Categories")]
+        public ActionResult<List<int>> getCategories()
+        {
+            return _storeClusterRepo.getCategories().Result;
         }
     }
 }

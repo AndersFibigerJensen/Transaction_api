@@ -6,8 +6,8 @@ namespace Transaction_api.Repositories
 {
     public class StoreRepo
     {
-        private string getall = "select * from Stores";
-        private string get = "Select * from Stores where store_id=@ID";
+        private string getall = "select * from getallstores()";
+        private string get = "Select * from getStore(@ID)";
 
         private StoreContext _context;
 

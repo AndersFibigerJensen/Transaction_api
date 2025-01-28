@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Transaction_api.Context;
+using Transaction_api.Models;
 using Transaction_api.NewFolder;
 using Transaction_api.Repositories;
 namespace Transaction_api.Controllers
@@ -9,10 +10,12 @@ namespace Transaction_api.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly TransactionRepo _repo;
+        private readonly ProductRepo productrepo;
 
-        public TransactionController(TransactionRepo repo)
+        public TransactionController(TransactionRepo repo,ProductRepo pro)
         {
             _repo = repo;
+            productrepo = pro;
         }
 
         /// <summary>
@@ -20,9 +23,15 @@ namespace Transaction_api.Controllers
         /// </summary>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
-        public void addtransaction()
+        public void addtransaction([FromQuery] int storeid, [FromQuery] int product)
         {
-            //_repo.add();
+            Product pro =productrepo.get(product).Result;
+            DateTime time = DateTime.Now;
+            int month=time.Month;
+            int weekday = (int)time.DayOfWeek;
+            int hour = time.Hour;
+            Segment segment = new Segment(1, hour, weekday, month, 1, storeid, pro.Product_id,pro.Product_category);
+            _repo.add(segment);
         }
 
 

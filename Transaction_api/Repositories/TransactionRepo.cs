@@ -11,12 +11,12 @@ namespace Transaction_api.Repositories
     {
         private TransactionContext _db;
 
-        private string getpost = "Select * from Segment where Transaction_id=@ID";
-        private string addpost = "Insert into Segment (Transaction_id,Transaction_hour,Transaction_month,Transaction_weekday,Transaction_qty,Store_id_inp1,product_id_inp1,product_category_inp1) values(@id,@hour,@month,@weekday,@qty,@storeid,@productid,@category)";
+        private string getpost = "Select * from getTransaction(@ID)";
+        private string addpost = "Insert into Transactions (Transaction_id,hour,month,store_id,product_id,product_category,Transaction_qty) values(@ID,@hour,@month,@storeid,@pro,@category,@qty)";
         private string deletepost = "Delete from Segment where Transaction_id=@ID";
         private string updatepost = "update Segment set Transaction_hour=@hour,Transaction_month=@month,Transaction_weekday=@weekday," +
             "Transaction_qty=@qty,Store_id_inp1=@storeid,product_id_inp1=@productid,product_category_inp1=@category where Transaction_id=@id";
-        private string getmax = "select max(Transaction_id) from Segment";
+        private string getmax = "select max(Transaction_id) from Transactions";
 
         public TransactionRepo(TransactionContext dbcontext)
         {
@@ -37,14 +37,13 @@ namespace Transaction_api.Repositories
                 {
                     try
                     {
-                        command.Parameters.AddWithValue("@ID",maxid().Result);
-                        command.Parameters.AddWithValue("hour",action.hour);
-                        command.Parameters.AddWithValue("@month",action.month);
-                        command.Parameters.AddWithValue("@weekday", action.weekday);
+                        command.Parameters.AddWithValue("@ID",maxid().Result+1);
+                        command.Parameters.AddWithValue("hour",action.Hour);
+                        command.Parameters.AddWithValue("@month",action.Month);
                         command.Parameters.AddWithValue("@qty",action.Transaction_qty);
-                        command.Parameters.AddWithValue("@storeid",action.store_location);
-                        command.Parameters.AddWithValue("@productid",action.product_id);
-                        command.Parameters.AddWithValue("@category",action.product_category);
+                        command.Parameters.AddWithValue("@storeid",action.Store_location);
+                        command.Parameters.AddWithValue("@pro",action.Product_id);
+                        command.Parameters.AddWithValue("@category",action.Product_category);
                         await command.Connection.OpenAsync();
                         await command.ExecuteNonQueryAsync();
                     }
@@ -137,13 +136,13 @@ namespace Transaction_api.Repositories
                     try
                     {
 
-                        command.Parameters.AddWithValue("hour", action.hour);
-                        command.Parameters.AddWithValue("@month", action.month);
-                        command.Parameters.AddWithValue("@weekday", action.weekday);
+                        command.Parameters.AddWithValue("hour", action.Hour);
+                        command.Parameters.AddWithValue("@month", action.Month);
+                        command.Parameters.AddWithValue("@weekday", action.Weekday);
                         command.Parameters.AddWithValue("@qty", action.Transaction_qty);
-                        command.Parameters.AddWithValue("@storeid", action.store_location);
-                        command.Parameters.AddWithValue("@productid", action.product_id);
-                        command.Parameters.AddWithValue("@category", action.product_category);
+                        command.Parameters.AddWithValue("@storeid", action.Store_location);
+                        command.Parameters.AddWithValue("@productid", action.Product_id);
+                        command.Parameters.AddWithValue("@category", action.Product_category);
                         await command.Connection.OpenAsync();
                         SqlDataReader reader = await command.ExecuteReaderAsync();
                         if (reader.Read())
@@ -169,11 +168,11 @@ namespace Transaction_api.Repositories
             return null;
         }
 
-        public async Task<int> maxid()
+        public async Task<long> maxid()
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
             {
-                using (SqlCommand command = new SqlCommand(updatepost, connection))
+                using (SqlCommand command = new SqlCommand(getmax, connection))
                 {
                     try
                     {
@@ -181,7 +180,7 @@ namespace Transaction_api.Repositories
                         SqlDataReader reader= await command.ExecuteReaderAsync();
                         if(reader.Read())
                         {
-                            int maxid = reader.GetInt32(0);
+                            long maxid = reader.GetInt64(0);
                             return maxid;
                         }
                     }

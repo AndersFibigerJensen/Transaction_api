@@ -8,11 +8,14 @@
 
         public string Product_type { get; set; }
 
-        public Product(int product_id,string product_detail,string product_type)
+        public int Product_category { get; set; }
+
+        public Product(int product_id,string product_detail,string product_type,int category)
         {
             Product_id=product_id;
             Product_detail=product_detail;
             Product_type=product_type;
+            Product_category = category;
         }
     }
 }

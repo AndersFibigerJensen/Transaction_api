@@ -6,8 +6,8 @@ namespace Transaction_api.Repositories
 {
     public class ProductRepo
     {
-        private string getallproducts = "Select * from Products";
-        private string getid = "Select * from Products where @ID";
+        private string getallproducts = "Select * from getallproducts()";
+        private string getid = "Select * from getProduct(@ID)";
 
         private ProductContext _context;
 
@@ -32,9 +32,10 @@ namespace Transaction_api.Repositories
                     while(await reader.ReadAsync())
                     {
                         int productid = reader.GetInt32(0);
-                        string productname = reader.GetString(1);
-                        string productdetail= reader.GetString(2);
-                        Product pro= new Product(productid, productname, productdetail);
+                        string productname = reader.GetString(2);
+                        string productdetail= reader.GetString(3);
+                        int category = reader.GetInt32(4);
+                        Product pro= new Product(productid, productname, productdetail,category);
                         products.Add(pro);
                     }
                     return products;
@@ -53,10 +54,11 @@ namespace Transaction_api.Repositories
                     SqlDataReader reader = await command.ExecuteReaderAsync();
                     if (await reader.ReadAsync())
                     {
-                        int productid = reader.GetInt16(0);
-                        string productname = reader.GetString(1);
-                        string productdetail = reader.GetString(2);
-                        Product pro = new Product(productid, productname, productdetail);
+                        int productid = reader.GetInt32(0);
+                        string productname = reader.GetString(2);
+                        string productdetail = reader.GetString(3);
+                        int category = reader.GetInt32(4);
+                        Product pro = new Product(productid, productname, productdetail,category);
                         return pro;
                     }
                 }

@@ -9,6 +9,9 @@ namespace Transaction_api.Repositories
         private ProductClusterContext _context;
         
         private string getallSQL = "select * from product_cluster";
+        private string StoreDistinct = "select distinct(Store_id) from StoreCluster";
+        private string categoryDistinct = "select distinct(product_category) from StoreCluster";
+        private string clusterDistinct = "select distinct(cluster_id) from StoreCluster";
 
 
         public ProductClusterRepo(ProductClusterContext context)
@@ -23,7 +26,7 @@ namespace Transaction_api.Repositories
         /// <param name="cluster_id"></param>
         /// <param name="hour"></param>
         /// <returns></returns>
-        public async Task<List<ProductCluster>> getall(int category_id = 0, int cluster_id = 0, int hour = 0)
+        public async Task<int> getall(int category_id = 0, int cluster_id = -1, int hour = 0)
         {
             using (SqlConnection connection = new SqlConnection(Secret.secret))
             {
@@ -37,23 +40,30 @@ namespace Transaction_api.Repositories
                         long productid = reader.GetInt64(0);
                         int productname = reader.GetInt32(1);
                         int productdetail = reader.GetInt32(2);
-                        int prod =reader.GetInt32(3);
+                        bool read = reader.IsDBNull(3);
+                        int prod = 0;
+                        if (read == true)
+                        {
+                            prod = 0;
+                        }
+                        else
+                            prod = reader.GetInt32(3);
                         ProductCluster pro = new ProductCluster(productid, productname, productdetail, prod);
                         products.Add(pro);
                     }
-                    if(category_id==0)
+                    if(category_id!=0)
                     {
-                        products.Where(a => a.Cluster_id == cluster_id).ToList();
+                        products=products.Where(a => a.Product_category ==category_id).ToList();
                     }
-                    if(cluster_id==0)
+                    if(cluster_id!=-1)
                     {
-                        products.Where(a=>a.Cluster_id == hour).ToList();
+                        products=products.Where(a=>a.Cluster_id == cluster_id).ToList();
                     }
-                    if(hour==0)
+                    if(hour!=0)
                     {
-                        products.Where(a => a.Hour == hour).ToList();
+                        products=products.Where(a => a.Hour == hour).ToList();
                     }
-                    return products;
+                    return products.Count;
                 }
             }
         }
